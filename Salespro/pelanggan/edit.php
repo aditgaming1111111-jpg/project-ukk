@@ -26,6 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->close();
     $conn->close();
 
+    logActivity('Edit pelanggan', 'Pelanggan', 'Mengubah pelanggan ID ' . $id . ' menjadi: ' . $nama, $_SESSION['user_id'] ?? null, 'success');
     flash('success', 'Data pelanggan berhasil diperbarui.');
     redirect('/pelanggan/index.php');
 }

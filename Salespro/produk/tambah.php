@@ -28,6 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->close();
     $conn->close();
 
+    logActivity('Tambah produk', 'Produk', 'Menambah produk: ' . $nama . ' (stok: ' . $stok . ', harga: ' . $harga . ')', $_SESSION['user_id'] ?? null, 'success');
     flash('success', 'Data produk berhasil ditambahkan.');
     redirect('/produk/index.php');
 }

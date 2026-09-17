@@ -19,6 +19,22 @@ function dbConnect()
     }
 
     $conn->set_charset('utf8mb4');
+    $conn->query("CREATE TABLE IF NOT EXISTS activity_log (
+        log_id INT AUTO_INCREMENT PRIMARY KEY,
+        user_id INT NULL,
+        nama_pengguna VARCHAR(100) NULL,
+        module VARCHAR(50) NOT NULL,
+        action VARCHAR(100) NOT NULL,
+        details TEXT NULL,
+        status ENUM('success', 'error', 'warning', 'info') NOT NULL DEFAULT 'success',
+        ip_address VARCHAR(45) DEFAULT NULL,
+        user_agent TEXT DEFAULT NULL,
+        created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        KEY idx_user_id (user_id),
+        KEY idx_created_at (created_at),
+        KEY idx_module (module)
+    )");
+
     return $conn;
 }
 
@@ -40,4 +56,23 @@ function flash(string $key, ?string $message = null)
     }
 
     $_SESSION[$key] = $message;
+}
+
+function logActivity(string $action, string $module = 'General', string $details = '', ?int $userId = null, string $status = 'success'): void
+{
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+
+    $conn = dbConnect();
+    $currentUserId = $userId ?? ($_SESSION['user_id'] ?? null);
+    $currentUserName = $_SESSION['user_name'] ?? null;
+    $ipAddress = $_SERVER['REMOTE_ADDR'] ?? '-';
+    $userAgent = $_SERVER['HTTP_USER_AGENT'] ?? '-';
+
+    $stmt = $conn->prepare('INSERT INTO activity_log (user_id, nama_pengguna, module, action, details, status, ip_address, user_agent) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
+    $stmt->bind_param('isssssss', $currentUserId, $currentUserName, $module, $action, $details, $status, $ipAddress, $userAgent);
+    $stmt->execute();
+    $stmt->close();
+    $conn->close();
 }

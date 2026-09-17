@@ -30,6 +30,7 @@ if ($user) {
 }
 
 if (!$user || !$passwordValid) {
+    logActivity('Login gagal', 'Auth', 'Gagal login dengan email: ' . $email, null, 'error');
     flash('error', 'Email atau password salah.');
     redirect('/auth/login.php');
 }
@@ -50,4 +51,5 @@ $_SESSION['user_name'] = $user['nama_pengguna'];
 $_SESSION['user_email'] = $user['email'];
 $_SESSION['user_role'] = $user['peran'];
 
+logActivity('Login berhasil', 'Auth', 'Login berhasil ke sistem', (int) $user['pengguna_id'], 'success');
 redirect('/dashboard.php');

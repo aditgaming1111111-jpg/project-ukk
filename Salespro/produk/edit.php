@@ -28,6 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->close();
     $conn->close();
 
+    logActivity('Edit produk', 'Produk', 'Mengubah produk ID ' . $id . ' menjadi: ' . $nama . ' (stok: ' . $stok . ', harga: ' . $harga . ')', $_SESSION['user_id'] ?? null, 'success');
     flash('success', 'Data produk berhasil diperbarui.');
     redirect('/produk/index.php');
 }

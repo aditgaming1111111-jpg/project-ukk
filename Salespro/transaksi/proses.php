@@ -138,6 +138,7 @@ if ($action === 'save') {
         $conn->commit();
         unset($_SESSION['cart']);
         unset($_SESSION['selected_customer_id']);
+        logActivity('Transaksi berhasil', 'Transaksi', 'Menyimpan transaksi ID ' . $transaksiId . ' dengan total Rp ' . number_format($total, 0, ',', '.') . ' oleh user ' . ($_SESSION['user_name'] ?? 'system'), $_SESSION['user_id'] ?? null, 'success');
         flash('success', 'Transaksi berhasil disimpan.');
         redirect('/transaksi/struk.php?id=' . $transaksiId);
     } catch (Exception $e) {

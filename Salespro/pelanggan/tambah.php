@@ -22,6 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->close();
     $conn->close();
 
+    logActivity('Tambah pelanggan', 'Pelanggan', 'Menambah pelanggan: ' . $nama . ' (' . $jenis . ')', $_SESSION['user_id'] ?? null, 'success');
     flash('success', 'Data pelanggan berhasil ditambahkan.');
     redirect('/pelanggan/index.php');
 }

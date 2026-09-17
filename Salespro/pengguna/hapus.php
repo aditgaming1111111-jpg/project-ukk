@@ -10,6 +10,7 @@ if ($id > 0) {
     $stmt->execute();
     $stmt->close();
     $conn->close();
+    logActivity('Hapus pengguna', 'Pengguna', 'Menghapus pengguna dengan ID ' . $id, $_SESSION['user_id'] ?? null, 'warning');
     flash('success', 'Data pengguna berhasil dihapus.');
 }
 

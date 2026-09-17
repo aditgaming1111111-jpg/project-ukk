@@ -33,6 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->close();
     $conn->close();
 
+    logActivity('Edit pengguna', 'Pengguna', 'Mengubah data pengguna ID ' . $id . ' menjadi: ' . $nama . ' (' . $email . ', ' . $peran . ')', $_SESSION['user_id'] ?? null, 'success');
     flash('success', 'Data pengguna berhasil diperbarui.');
     redirect('/pengguna/index.php');
 }

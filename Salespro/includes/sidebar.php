@@ -25,6 +25,9 @@ $role = $user['role'] ?? '';
             <a href="<?php echo BASE_URL; ?>/pengguna/index.php" class="nav-link <?php echo strpos($_SERVER['PHP_SELF'], '/pengguna/') !== false ? 'active' : ''; ?>">
                 <span>Pengguna</span>
             </a>
+            <a href="<?php echo BASE_URL; ?>/log_aktivitas.php" class="nav-link <?php echo strpos($_SERVER['PHP_SELF'], '/log_aktivitas.php') !== false ? 'active' : ''; ?>">
+                <span>Log Aktivitas</span>
+            </a>
             <a href="<?php echo BASE_URL; ?>/laporan/index.php" class="nav-link <?php echo strpos($_SERVER['PHP_SELF'], '/laporan/') !== false ? 'active' : ''; ?>">
                 <span>Laporan</span>
             </a>

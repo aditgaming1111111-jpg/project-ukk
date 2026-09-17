@@ -23,6 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->close();
     $conn->close();
 
+    logActivity('Tambah pengguna', 'Pengguna', 'Menambah pengguna: ' . $nama . ' (' . $email . ', ' . $peran . ')', $_SESSION['user_id'] ?? null, 'success');
     flash('success', 'Data pengguna berhasil ditambahkan.');
     redirect('/pengguna/index.php');
 }
